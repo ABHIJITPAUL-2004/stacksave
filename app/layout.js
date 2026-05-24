@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "SpendLens AI | AI Spend Audit",
+  title: "StackSave | AI Spend Audit",
   description:
     "A SaaS starter for auditing AI tool spend across fast-moving startup teams.",
 };

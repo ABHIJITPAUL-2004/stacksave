@@ -1,4 +1,4 @@
-# SpendLens AI
+# StackSave
 
 AI Spend Audit is a SaaS internship project for helping startups understand and reduce overspending on AI tools such as ChatGPT, Claude, Cursor, GitHub Copilot, and Gemini.
 
@@ -18,12 +18,16 @@ AI Spend Audit is a SaaS internship project for helping startups understand and 
 - Tailwind CSS
 - React
 - lucide-react
+- react-hook-form
+- zod
+- @hookform/resolvers
 
 ## Project Structure
 
 ```txt
 app/
 components/
+components/audit/
 components/ui/
 data/
 lib/
@@ -65,9 +69,28 @@ git commit -m "Build Day 1 SaaS landing page"
 git commit -m "Add reusable components and project README"
 ```
 
-## Day 2 Direction
+## Day 2 Scope
 
-- Define audit input fields
-- Add static sample data
-- Create a basic dashboard route
-- Plan Supabase schema before integrating it
+- `/audit` route for spend data collection
+- Dynamic add/remove AI tool cards
+- Tool name, plan, monthly spend, and seat inputs
+- Team size and primary use case fields
+- Validation with react-hook-form and zod
+- Local persistence with localStorage
+- Centralized tool and pricing metadata in `data/tools.js`
+
+## Suggested Day 2 Commits
+
+```bash
+git add .
+git commit -m "Add spend audit form route"
+git commit -m "Create reusable audit form components"
+git commit -m "Add validation and local form persistence"
+```
+
+## Day 3 Direction
+
+- Add a read-only audit results preview route
+- Convert collected form data into structured summary cards
+- Keep recommendations static until real audit rules are designed
+- Plan Supabase tables before writing database code

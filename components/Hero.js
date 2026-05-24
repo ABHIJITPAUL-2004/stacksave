@@ -16,13 +16,13 @@ export function Hero() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-            SpendLens AI helps teams prepare for smarter audits across ChatGPT,
+            StackSave helps teams prepare for smarter audits across ChatGPT,
             Claude, Cursor, Copilot, Gemini, and other tools without adding
             complexity on day one.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button href="#cta" icon={<ArrowRight size={18} />}>
+            <Button href="/audit" icon={<ArrowRight size={18} />}>
               Start audit preview
             </Button>
             <Button href="#how-it-works" variant="secondary">
