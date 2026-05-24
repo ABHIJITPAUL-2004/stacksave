@@ -31,6 +31,7 @@ components/audit/
 components/ui/
 data/
 lib/
+lib/auditEngine/
 public/
 utils/
 ```
@@ -94,3 +95,30 @@ git commit -m "Add validation and local form persistence"
 - Convert collected form data into structured summary cards
 - Keep recommendations static until real audit rules are designed
 - Plan Supabase tables before writing database code
+
+## Day 3 Scope
+
+- Deterministic audit engine with pure functions
+- Centralized pricing assumptions in `data/pricing.js`
+- Plan downgrade, enterprise overprovisioning, seat cleanup, use-case mismatch, and vendor consolidation rules
+- Savings calculator utilities
+- Temporary `/results` page for functional result rendering
+- No backend, database, authentication, or AI summary generation
+
+## Suggested Day 3 Commits
+
+```bash
+git add .
+git commit -m "Add deterministic audit engine"
+git commit -m "Create pricing and recommendation rules"
+git commit -m "Render audit results from saved form data"
+```
+
+## Suggested Unit Test Structure
+
+```txt
+tests/
+  audit-engine.test.js
+  pricing-engine.test.js
+  recommendation-rules.test.js
+```

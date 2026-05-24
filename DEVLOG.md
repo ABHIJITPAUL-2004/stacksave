@@ -28,3 +28,31 @@
 ### Notes
 
 The form is designed to produce clean structured data first. This makes Day 3 easier because the next layer can read from a predictable schema instead of parsing loose UI state.
+
+## Day 3 - Audit Engine
+
+### Completed
+
+- Added a deterministic audit engine in `lib/auditEngine`.
+- Added centralized static pricing assumptions in `data/pricing.js`.
+- Added pure calculation utilities for monthly and annual savings.
+- Added rule categories:
+  - Plan downgrade opportunities
+  - Enterprise overprovisioning
+  - Seat inefficiency
+  - Vendor consolidation
+  - Use-case mismatch
+- Connected the Day 2 form to a temporary `/results` page.
+- Rendered readable savings metrics and recommendation cards.
+
+### Not Included Yet
+
+- Backend audit API
+- Database persistence
+- Shareable result URLs
+- AI-generated executive summary
+- Authenticated user accounts
+
+### Notes
+
+The engine intentionally uses deterministic rules instead of AI. This keeps the recommendations defensible, testable, and easier to explain to a founder or finance lead.

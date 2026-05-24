@@ -1,7 +1,12 @@
 import { Trash2 } from "lucide-react";
-import { getDefaultPlanId, getToolById, supportedTools } from "@/data/tools";
+import { useEffect } from "react";
+import {
+  getDefaultPlanId,
+  getPlanById,
+  getToolById,
+  supportedTools,
+} from "@/data/tools";
 import { PlanSelector } from "@/components/audit/PlanSelector";
-import { SpendInput } from "@/components/audit/SpendInput";
 
 export function ToolCard({
   index,
@@ -13,8 +18,22 @@ export function ToolCard({
   canRemove,
 }) {
   const toolId = watch(`tools.${index}.toolId`);
+  const planId = watch(`tools.${index}.planId`);
+  const seats = watch(`tools.${index}.seats`);
   const selectedTool = getToolById(toolId);
+  const selectedPlan = getPlanById(toolId, planId);
+  const planPrice = selectedPlan?.monthlyPrice;
+  const seatCount = Number(seats || 0);
+  const calculatedSpend =
+    typeof planPrice === "number" ? planPrice * seatCount : 0;
   const toolErrors = errors?.tools?.[index] || {};
+
+  useEffect(() => {
+    setValue(`tools.${index}.monthlySpend`, calculatedSpend, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  }, [calculatedSpend, index, setValue]);
 
   function handleToolChange(event) {
     const nextToolId = event.target.value;
@@ -36,7 +55,7 @@ export function ToolCard({
           </h3>
           <p className="mt-1 text-sm text-slate-400">
             {selectedTool
-              ? `${selectedTool.vendor} · ${selectedTool.category}`
+              ? `${selectedTool.vendor} - ${selectedTool.category}`
               : "Choose a supported AI product"}
           </p>
         </div>
@@ -83,17 +102,6 @@ export function ToolCard({
           error={toolErrors.planId?.message}
         />
 
-        <SpendInput
-          label="Monthly spend"
-          type="number"
-          min="0"
-          step="0.01"
-          inputMode="decimal"
-          placeholder="0"
-          {...register(`tools.${index}.monthlySpend`)}
-          error={toolErrors.monthlySpend?.message}
-        />
-
         <label className="block">
           <span className="mb-2 block text-sm font-medium text-slate-300">
             Number of seats
@@ -108,6 +116,34 @@ export function ToolCard({
           {toolErrors.seats ? (
             <p className="mt-2 text-sm text-rose-300">
               {toolErrors.seats.message}
+            </p>
+          ) : null}
+        </label>
+
+        <label className="block">
+          <span className="mb-2 block text-sm font-medium text-slate-300">
+            Monthly spend
+          </span>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-500">
+              $
+            </span>
+            <input
+              type="number"
+              value={calculatedSpend}
+              readOnly
+              className="h-11 w-full rounded-lg border border-white/10 bg-white/[0.025] px-8 text-sm text-slate-300 outline-none"
+            />
+            <input type="hidden" {...register(`tools.${index}.monthlySpend`)} />
+          </div>
+          <p className="mt-2 text-sm text-slate-400">
+            {typeof planPrice === "number"
+              ? `$${planPrice}/seat x ${seatCount} seats`
+              : "Custom pricing plan - calculated as $0 for now"}
+          </p>
+          {toolErrors.monthlySpend ? (
+            <p className="mt-2 text-sm text-rose-300">
+              {toolErrors.monthlySpend.message}
             </p>
           ) : null}
         </label>

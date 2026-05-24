@@ -2,15 +2,15 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, RotateCcw, Save } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { ToolCard } from "@/components/audit/ToolCard";
 import { TeamSizeInput } from "@/components/audit/TeamSizeInput";
 import { UseCaseSelector } from "@/components/audit/UseCaseSelector";
 import { getDefaultPlanId } from "@/data/tools";
+import { AUDIT_FORM_STORAGE_KEY } from "@/hooks/useStoredAuditInput";
 import { auditSchema, defaultAuditValues } from "@/lib/auditSchema";
-
-const STORAGE_KEY = "stacksave.auditForm.v1";
 
 function createToolEntry(toolId = "chatgpt") {
   return {
@@ -22,6 +22,7 @@ function createToolEntry(toolId = "chatgpt") {
 }
 
 export function SpendAuditForm() {
+  const router = useRouter();
   const [lastSavedAt, setLastSavedAt] = useState("");
   const hasLoadedSavedForm = useRef(false);
 
@@ -47,13 +48,13 @@ export function SpendAuditForm() {
   const formValues = useWatch({ control });
 
   useEffect(() => {
-    const savedForm = window.localStorage.getItem(STORAGE_KEY);
+    const savedForm = window.localStorage.getItem(AUDIT_FORM_STORAGE_KEY);
 
     if (savedForm) {
       try {
         reset(JSON.parse(savedForm));
       } catch {
-        window.localStorage.removeItem(STORAGE_KEY);
+        window.localStorage.removeItem(AUDIT_FORM_STORAGE_KEY);
       }
     }
 
@@ -64,7 +65,10 @@ export function SpendAuditForm() {
     if (!hasLoadedSavedForm.current) return;
 
     const timeoutId = window.setTimeout(() => {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(formValues));
+      window.localStorage.setItem(
+        AUDIT_FORM_STORAGE_KEY,
+        JSON.stringify(formValues)
+      );
       setLastSavedAt(new Date().toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -87,13 +91,14 @@ export function SpendAuditForm() {
   }, [formValues.tools]);
 
   function onSubmit(values) {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+    window.localStorage.setItem(AUDIT_FORM_STORAGE_KEY, JSON.stringify(values));
     setLastSavedAt("just now");
+    router.push("/results");
   }
 
   function handleReset() {
     reset(defaultAuditValues);
-    window.localStorage.removeItem(STORAGE_KEY);
+    window.localStorage.removeItem(AUDIT_FORM_STORAGE_KEY);
   }
 
   return (
@@ -196,7 +201,7 @@ export function SpendAuditForm() {
           className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-teal-300 px-5 text-sm font-semibold text-slate-950 shadow-lg shadow-teal-950/30 transition hover:bg-teal-200"
         >
           <Save size={18} />
-          Save spend inputs
+          Run audit
         </button>
 
         {isSubmitted && !Object.keys(errors).length ? (
