@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# StackSave
 
-## Getting Started
+StackSave is a small SaaS-style web app that helps startups figure out if they are overspending on AI tools like ChatGPT, Claude, Cursor, GitHub Copilot, Gemini and others.
 
-First, run the development server:
+The idea came from seeing how many small teams keep paying for overlapping AI subscriptions without really knowing if the plans actually fit their usage. The app audits a team's current AI stack and suggests cheaper or better optimized alternatives.
+
+This project is being built as part of the Credex Web Development Internship assignment.
+
+---
+
+## What it currently does
+
+* Lets users add multiple AI tools and plans
+* Calculates estimated monthly + yearly AI spend
+* Detects obvious overpayment situations
+* Suggests better plans or consolidation opportunities
+* Generates personalized audit summaries using AI
+* Shows estimated savings in a dashboard format
+
+---
+
+## Tech Stack
+
+* Next.js
+* React
+* JavaScript
+* Tailwind CSS
+* Supabase (planned)
+* Vercel deployment
+
+---
+
+## Running locally
+
+Clone the repo and install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Why I built it this way
 
-To learn more about Next.js, take a look at the following resources:
+I wanted the project to feel closer to a real startup product instead of a normal college assignment. Most of the focus went into:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* product flow
+* audit reasoning
+* usability
+* clean UI
+* realistic recommendations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+instead of just adding random features.
 
-## Deploy on Vercel
+I also tried keeping the architecture simple enough to move fast during the 7-day timeline.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Current status
+
+Still actively building and improving features daily.
+
+Upcoming work:
+
+* public shareable audit URLs
+* lead capture flow
+* testing
+* deployment optimization
+* accessibility improvements
+
+---
+
+## Notes
+
+The audit logic is rules-based intentionally. AI is only used for generating personalized summaries, not for financial calculations.
+
+Some pricing assumptions may change over time as vendors update their plans.
