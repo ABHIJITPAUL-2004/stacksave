@@ -1,31 +1,70 @@
 # StackSave
 
-AI Spend Audit is a SaaS internship project for helping startups understand and reduce overspending on AI tools such as ChatGPT, Claude, Cursor, GitHub Copilot, and Gemini.
+StackSave is a SaaS project designed to help startups and small teams understand where they may be overspending on AI tools.
 
-## Day 1 Scope
+The platform analyzes usage across tools like ChatGPT, Claude, Cursor, GitHub Copilot, and Gemini, then generates practical cost-saving recommendations through a clean audit dashboard experience.
 
-- Next.js App Router project initialized with JavaScript
-- Tailwind CSS configured through the default Next.js setup
-- Dark, modern SaaS landing page
-- Reusable landing page components
-- Clean folder structure for future modules
-- No authentication, backend, database, or audit engine yet
+This project was built as part of a SaaS internship project with a focus on scalable frontend architecture, reusable UI systems, and deterministic audit logic before adding full backend intelligence.
 
-## Tech Stack
+---
+
+## Features
+
+### Landing Experience
+- Modern dark SaaS landing page
+- Fully responsive UI
+- Reusable component architecture
+- Clean and scalable folder structure
+
+### AI Spend Audit
+- Dynamic AI tool input cards
+- Add/remove tool support
+- Monthly spend and seat tracking
+- Team size and use-case collection
+- Form validation using Zod + React Hook Form
+- Local persistence with localStorage
+
+### Audit Intelligence
+- Deterministic recommendation engine
+- Pricing assumption system
+- Savings calculations
+- Plan downgrade suggestions
+- Seat cleanup detection
+- Vendor consolidation recommendations
+
+### Results Dashboard
+- Savings overview section
+- Spend comparison summaries
+- Founder-style AI summaries
+- Fallback summaries when AI fails
+- Shareable public report pages
+
+### Backend & Infrastructure
+- Supabase audit persistence
+- Public-safe audit report routes
+- Lead capture flow
+- Transactional email support using Resend
+- Basic rate limiting and duplicate lead handling
+
+---
+
+# Tech Stack
 
 - Next.js
+- React
 - JavaScript
 - Tailwind CSS
-- React
 - lucide-react
 - react-hook-form
 - zod
 - @hookform/resolvers
-- Anthropic Messages API through `fetch`
 - Supabase
 - Resend
+- Anthropic Messages API
 
-## Project Structure
+---
+
+# Project Structure
 
 ```txt
 app/
@@ -33,13 +72,17 @@ components/
 components/audit/
 components/ui/
 data/
+docs/
 lib/
 lib/auditEngine/
 public/
+tests/
 utils/
 ```
 
-## Getting Started
+---
+
+# Getting Started
 
 Install dependencies:
 
@@ -47,15 +90,21 @@ Install dependencies:
 npm install
 ```
 
-Run the development server:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Open http://localhost:3000 in the browser.
+Open:
 
-## Available Scripts
+```txt
+http://localhost:3000
+```
+
+---
+
+# Available Scripts
 
 ```bash
 npm run dev
@@ -64,60 +113,34 @@ npm run start
 npm run lint
 ```
 
-## Suggested Day 1 Commits
+---
 
-```bash
-git add .
-git commit -m "Initialize Next.js app with Tailwind"
-git commit -m "Build Day 1 SaaS landing page"
-git commit -m "Add reusable components and project README"
+# Environment Variables
+
+Create a `.env.local` file in the root directory and add:
+
+```env
+ANTHROPIC_API_KEY=
+ANTHROPIC_MODEL=claude-sonnet-4-20250514
+
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+RESEND_API_KEY=
+RESEND_FROM_EMAIL=StackSave <onboarding@resend.dev>
 ```
 
-## Day 2 Scope
+Important:
+- Never commit `.env.local`
+- Keep service role keys server-only
+- Store all API keys securely
 
-- `/audit` route for spend data collection
-- Dynamic add/remove AI tool cards
-- Tool name, plan, monthly spend, and seat inputs
-- Team size and primary use case fields
-- Validation with react-hook-form and zod
-- Local persistence with localStorage
-- Centralized tool and pricing metadata in `data/tools.js`
+---
 
-## Suggested Day 2 Commits
+# Testing
 
-```bash
-git add .
-git commit -m "Add spend audit form route"
-git commit -m "Create reusable audit form components"
-git commit -m "Add validation and local form persistence"
-```
-
-## Day 3 Direction
-
-- Add a read-only audit results preview route
-- Convert collected form data into structured summary cards
-- Keep recommendations static until real audit rules are designed
-- Plan Supabase tables before writing database code
-
-## Day 3 Scope
-
-- Deterministic audit engine with pure functions
-- Centralized pricing assumptions in `data/pricing.js`
-- Plan downgrade, enterprise overprovisioning, seat cleanup, use-case mismatch, and vendor consolidation rules
-- Savings calculator utilities
-- Temporary `/results` page for functional result rendering
-- No backend, database, authentication, or AI summary generation
-
-## Suggested Day 3 Commits
-
-```bash
-git add .
-git commit -m "Add deterministic audit engine"
-git commit -m "Create pricing and recommendation rules"
-git commit -m "Render audit results from saved form data"
-```
-
-## Suggested Unit Test Structure
+Suggested test structure:
 
 ```txt
 tests/
@@ -126,85 +149,32 @@ tests/
   recommendation-rules.test.js
 ```
 
-## Day 4 Scope
+---
 
-- Polished `/results` dashboard
-- Hero savings section
-- Spend comparison visualization
-- Founder-style AI summary through `/api/summary`
-- Deterministic fallback summary if the AI call fails
-- Conditional Credex CTA for high-savings accounts
-- Share/copy link placeholder for future public reports
+# Roadmap
 
-## Environment Variables
+### Current
+- AI spend audit workflow
+- Deterministic savings engine
+- Results dashboard
+- Public audit reports
+- Lead capture system
 
-Copy `.env.example` to `.env.local` and set values locally:
+### Planned
+- Authentication
+- Team collaboration
+- Real AI recommendation logic
+- Stripe billing integration
+- Historical analytics
+- Exportable reports
+- Admin dashboard
 
-```bash
-ANTHROPIC_API_KEY=
-ANTHROPIC_MODEL=claude-sonnet-4-20250514
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-RESEND_API_KEY=
-RESEND_FROM_EMAIL=StackSave <onboarding@resend.dev>
-```
+---
 
-Do not commit `.env.local`.
+# Notes
 
-## Suggested Day 4 Commits
+The current version intentionally uses deterministic audit rules instead of fully AI-generated recommendations to keep the system predictable and transparent during development.
 
-```bash
-git add .
-git commit -m "Polish audit results dashboard"
-git commit -m "Add AI summary API with fallback handling"
-git commit -m "Add conditional results CTA and share UX"
-```
+AI summaries are layered on top primarily for presentation and user experience.
 
-## Day 5 Part 1 Scope
-
-- Supabase server client
-- `audits` and `leads` schema draft
-- `POST /api/audits`
-- `GET /api/audits/[id]`
-- `/results/[id]` public-safe reports
-- Dynamic metadata for shared audit pages
-- Save report panel on local results
-
-## Supabase Setup
-
-1. Create a Supabase project.
-2. Run `docs/SUPABASE_SCHEMA.sql` in the Supabase SQL editor.
-3. Add these values to `.env.local`:
-
-```bash
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-```
-
-`SUPABASE_SERVICE_ROLE_KEY` must stay server-only.
-
-## Suggested Day 5 Part 1 Commit
-
-```bash
-git add .
-git commit -m "Add Supabase audit persistence and public reports"
-```
-
-## Day 5 Part 2 Scope
-
-- `POST /api/leads`
-- Lead capture after the user sees audit value
-- Resend transactional confirmation email
-- Honeypot field
-- Basic rate limiting
-- Duplicate lead handling
-- Conditional CTA remains based on savings amount
-
-## Suggested Day 5 Part 2 Commit
-
-```bash
-git add .
-git commit -m "Add lead capture and transactional email flow"
-```
+The platform architecture is designed to support future scaling into a production SaaS product.
