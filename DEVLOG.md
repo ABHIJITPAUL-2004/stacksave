@@ -56,3 +56,35 @@ The form is designed to produce clean structured data first. This makes Day 3 ea
 ### Notes
 
 The engine intentionally uses deterministic rules instead of AI. This keeps the recommendations defensible, testable, and easier to explain to a founder or finance lead.
+
+## Day 4 - Results Experience and AI Summary
+
+### Completed
+
+- Rebuilt `/results` into a polished SaaS-style audit dashboard.
+- Added reusable result components:
+  - `SavingsHero`
+  - `AISummaryCard`
+  - `SpendBreakdown`
+  - `OptimizationInsights`
+  - `ResultsCTA`
+  - `ShareButton`
+- Added `/api/summary` for founder-friendly AI summaries.
+- Integrated Anthropic Messages API through direct `fetch`.
+- Added deterministic fallback summaries for missing keys or API failure.
+- Added conditional CTA logic:
+  - savings over `$500/month` shows Credex consultation CTA
+  - smaller savings show update/monitoring CTA
+- Added `.env.example` for secure API key setup.
+
+### Not Included Yet
+
+- Authentication
+- Database persistence
+- Public result IDs
+- Final deployment workflow
+- Email capture backend
+
+### Notes
+
+AI is only used for narrative summarization. Calculations, recommendations, savings, and business logic remain deterministic inside the audit engine.

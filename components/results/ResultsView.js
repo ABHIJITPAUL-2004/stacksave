@@ -1,12 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { runAudit } from "@/lib/auditEngine";
 import { useStoredAuditInput } from "@/hooks/useStoredAuditInput";
+import { AISummaryCard } from "@/components/results/AISummaryCard";
 import { MetricCard } from "@/components/results/MetricCard";
+import { OptimizationInsights } from "@/components/results/OptimizationInsights";
 import { RecommendationCard } from "@/components/results/RecommendationCard";
+import { ResultsCTA } from "@/components/results/ResultsCTA";
+import { SavingsHero } from "@/components/results/SavingsHero";
+import { SpendBreakdown } from "@/components/results/SpendBreakdown";
 import { Button } from "@/components/ui/Button";
-import { formatCurrency, formatNumber } from "@/utils/format";
 
 export function ResultsView() {
   const auditInput = useStoredAuditInput();
@@ -19,8 +22,8 @@ export function ResultsView() {
           No audit data found
         </h2>
         <p className="mx-auto mt-3 max-w-xl leading-7 text-slate-400">
-          Complete the spend form first. StackSave stores the current Day 3
-          audit locally in your browser.
+          Complete the spend form first. StackSave stores the current audit
+          locally in your browser.
         </p>
         <div className="mt-6">
           <Button href="/audit">Open audit form</Button>
@@ -29,37 +32,9 @@ export function ResultsView() {
     );
   }
 
-  const optimizedMessage =
-    auditResult.status === "optimized"
-      ? "Your current setup is already reasonably optimized."
-      : `StackSave found ${formatCurrency(
-          auditResult.totalMonthlySavings
-        )} in monthly optimization opportunities.`;
-
   return (
     <div className="space-y-8">
-      <section className="rounded-2xl border border-white/10 bg-white/[0.05] p-6 sm:p-8">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-200">
-              Audit results
-            </p>
-            <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl">
-              {optimizedMessage}
-            </h1>
-            <p className="mt-4 max-w-2xl leading-7 text-slate-300">
-              These recommendations are generated from deterministic business
-              rules using plan pricing, seat counts, team size, and tool overlap.
-            </p>
-          </div>
-          <Link
-            href="/audit"
-            className="inline-flex h-11 items-center justify-center rounded-lg border border-white/10 bg-white/[0.05] px-4 text-sm font-semibold text-white transition hover:bg-white/[0.09]"
-          >
-            Edit inputs
-          </Link>
-        </div>
-      </section>
+      <SavingsHero auditResult={auditResult} />
 
       <section className="grid gap-4 md:grid-cols-3">
         <MetricCard
@@ -78,35 +53,49 @@ export function ResultsView() {
         />
       </section>
 
-      <section className="rounded-xl border border-white/10 bg-[#0b0d14] p-5">
-        <div className="grid gap-4 sm:grid-cols-3">
-          <div>
-            <p className="text-sm text-slate-400">Tools analyzed</p>
-            <p className="mt-1 text-2xl font-semibold">
-              {formatNumber(auditResult.tools.length)}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-slate-400">Recommendations</p>
-            <p className="mt-1 text-2xl font-semibold">
-              {formatNumber(auditResult.recommendationCount)}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-slate-400">Monthly savings</p>
-            <p className="mt-1 text-2xl font-semibold text-teal-200">
-              {formatCurrency(auditResult.totalMonthlySavings)}
-            </p>
+      <AISummaryCard auditResult={auditResult} />
+
+      <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+        <SpendBreakdown auditResult={auditResult} />
+        <div className="rounded-xl border border-white/10 bg-white/[0.04] p-5">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-teal-200">
+            Report readiness
+          </p>
+          <h2 className="mt-3 text-2xl font-semibold text-white">
+            Shareable audit snapshot
+          </h2>
+          <p className="mt-3 leading-7 text-slate-400">
+            This page is structured for future public URLs and Open Graph
+            previews. Day 4 keeps sharing local while the report layout becomes
+            product-ready.
+          </p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-lg border border-white/10 bg-[#0b0d14] p-4">
+              <p className="text-sm text-slate-400">Recommendations</p>
+              <p className="mt-1 text-2xl font-semibold text-white">
+                {auditResult.recommendationCount}
+              </p>
+            </div>
+            <div className="rounded-lg border border-white/10 bg-[#0b0d14] p-4">
+              <p className="text-sm text-slate-400">Status</p>
+              <p className="mt-1 text-lg font-semibold capitalize text-white">
+                {auditResult.status.replaceAll("-", " ")}
+              </p>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
+
+      <OptimizationInsights auditResult={auditResult} />
 
       <section className="space-y-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-200">
             Recommendations
           </p>
-          <h2 className="mt-3 text-3xl font-semibold">Finance-aware actions</h2>
+          <h2 className="mt-3 text-3xl font-semibold">
+            Finance-aware actions
+          </h2>
         </div>
 
         {auditResult.recommendations.map((recommendation) => (
@@ -116,6 +105,8 @@ export function ResultsView() {
           />
         ))}
       </section>
+
+      <ResultsCTA auditResult={auditResult} />
     </div>
   );
 }

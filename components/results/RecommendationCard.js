@@ -3,6 +3,12 @@ import { formatCurrency } from "@/utils/format";
 
 export function RecommendationCard({ recommendation }) {
   const hasSavings = recommendation.monthlySavings > 0;
+  const priorityTone =
+    recommendation.severity === "high"
+      ? "warning"
+      : hasSavings
+        ? "success"
+        : "neutral";
 
   return (
     <article className="rounded-xl border border-white/10 bg-white/[0.04] p-5">
@@ -15,6 +21,7 @@ export function RecommendationCard({ recommendation }) {
             <Badge tone={hasSavings ? "success" : "neutral"}>
               {recommendation.type.replaceAll("-", " ")}
             </Badge>
+            <Badge tone={priorityTone}>{recommendation.severity} priority</Badge>
           </div>
           <p className="mt-3 text-base font-medium text-slate-100">
             {recommendation.action}

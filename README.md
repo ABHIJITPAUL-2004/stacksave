@@ -21,6 +21,7 @@ AI Spend Audit is a SaaS internship project for helping startups understand and 
 - react-hook-form
 - zod
 - @hookform/resolvers
+- Anthropic Messages API through `fetch`
 
 ## Project Structure
 
@@ -121,4 +122,34 @@ tests/
   audit-engine.test.js
   pricing-engine.test.js
   recommendation-rules.test.js
+```
+
+## Day 4 Scope
+
+- Polished `/results` dashboard
+- Hero savings section
+- Spend comparison visualization
+- Founder-style AI summary through `/api/summary`
+- Deterministic fallback summary if the AI call fails
+- Conditional Credex CTA for high-savings accounts
+- Share/copy link placeholder for future public reports
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and set values locally:
+
+```bash
+ANTHROPIC_API_KEY=
+ANTHROPIC_MODEL=claude-sonnet-4-20250514
+```
+
+Do not commit `.env.local`.
+
+## Suggested Day 4 Commits
+
+```bash
+git add .
+git commit -m "Polish audit results dashboard"
+git commit -m "Add AI summary API with fallback handling"
+git commit -m "Add conditional results CTA and share UX"
 ```
