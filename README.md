@@ -22,6 +22,8 @@ AI Spend Audit is a SaaS internship project for helping startups understand and 
 - zod
 - @hookform/resolvers
 - Anthropic Messages API through `fetch`
+- Supabase
+- Resend
 
 ## Project Structure
 
@@ -141,6 +143,11 @@ Copy `.env.example` to `.env.local` and set values locally:
 ```bash
 ANTHROPIC_API_KEY=
 ANTHROPIC_MODEL=claude-sonnet-4-20250514
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+RESEND_API_KEY=
+RESEND_FROM_EMAIL=StackSave <onboarding@resend.dev>
 ```
 
 Do not commit `.env.local`.
@@ -184,4 +191,20 @@ SUPABASE_SERVICE_ROLE_KEY=
 git add .
 git commit -m "Add Supabase audit persistence and public reports"
 ```
-##ai summary added
+
+## Day 5 Part 2 Scope
+
+- `POST /api/leads`
+- Lead capture after the user sees audit value
+- Resend transactional confirmation email
+- Honeypot field
+- Basic rate limiting
+- Duplicate lead handling
+- Conditional CTA remains based on savings amount
+
+## Suggested Day 5 Part 2 Commit
+
+```bash
+git add .
+git commit -m "Add lead capture and transactional email flow"
+```

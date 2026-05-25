@@ -1,6 +1,7 @@
 import { CalendarDays, Mail } from "lucide-react";
+import { LeadCaptureForm } from "@/components/lead-capture/LeadCaptureForm";
 
-export function ResultsCTA({ auditResult }) {
+export function ResultsCTA({ auditResult, publicId }) {
   const isPremiumOpportunity = auditResult.totalMonthlySavings > 500;
 
   if (isPremiumOpportunity) {
@@ -19,13 +20,24 @@ export function ResultsCTA({ auditResult }) {
               and procurement review.
             </p>
           </div>
-          <a
-            href="mailto:credex@example.com?subject=StackSave%20consultation"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-teal-300 px-5 text-sm font-semibold text-slate-950 transition hover:bg-teal-200"
-          >
-            <CalendarDays size={18} />
-            Book consultation
-          </a>
+        </div>
+        <div className="mt-2 grid gap-3 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-xl border border-teal-300/20 bg-[#05060a]/50 p-4">
+            <div className="flex items-center gap-2 text-teal-200">
+              <CalendarDays size={18} />
+              <span className="text-sm font-semibold">Post-value capture</span>
+            </div>
+            <p className="mt-3 text-sm leading-6 text-slate-300">
+              Share your details after seeing the savings estimate. Credex may
+              reach out when the opportunity is large enough to justify a deeper
+              review.
+            </p>
+          </div>
+          <LeadCaptureForm
+            auditResult={auditResult}
+            publicId={publicId}
+            mode="premium"
+          />
         </div>
       </section>
     );
@@ -46,13 +58,19 @@ export function ResultsCTA({ auditResult }) {
             team adds tools, seats, or API usage.
           </p>
         </div>
-        <a
-          href="mailto:updates@example.com?subject=StackSave%20updates"
-          className="inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-5 text-sm font-semibold text-white transition hover:bg-white/[0.1]"
-        >
-          <Mail size={18} />
-          Get updates
-        </a>
+      </div>
+      <div className="mt-2 grid gap-3 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="rounded-xl border border-white/10 bg-[#0b0d14] p-4">
+          <div className="flex items-center gap-2 text-slate-200">
+            <Mail size={18} />
+            <span className="text-sm font-semibold">Optimization updates</span>
+          </div>
+          <p className="mt-3 text-sm leading-6 text-slate-400">
+            Leave your email after seeing the report. We will use it for
+            follow-up and future optimization updates.
+          </p>
+        </div>
+        <LeadCaptureForm auditResult={auditResult} publicId={publicId} />
       </div>
     </section>
   );

@@ -11,6 +11,7 @@ export function ResultsDashboard({
   auditResult,
   auditInput,
   aiSummary,
+  publicId,
   isPublicReport = false,
 }) {
   return (
@@ -95,7 +96,7 @@ export function ResultsDashboard({
         ))}
       </section>
 
-      <ResultsCTA auditResult={auditResult} />
+      <ResultsCTA auditResult={auditResult} publicId={publicId} />
     </div>
   );
 }

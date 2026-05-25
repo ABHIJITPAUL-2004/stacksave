@@ -113,3 +113,29 @@ AI is only used for narrative summarization. Calculations, recommendations, savi
 ### Paused Before Part 2
 
 The next commit should add lead capture, transactional email, lightweight abuse protection, and final error/loading polish.
+
+## Day 5 - Backend Flow and Shareable Audits, Part 2
+
+### Completed
+
+- Added `POST /api/leads` for post-value lead capture.
+- Added reusable `saveLead()` database helper.
+- Added Resend transactional email integration.
+- Added confirmation email copy for normal and high-savings audits.
+- Added honeypot field to reduce bot submissions.
+- Added lightweight in-memory rate limiting for lead submissions.
+- Added duplicate lead handling per email and audit.
+- Replaced CTA mailto links with embedded lead capture forms.
+
+### Abuse Protection
+
+Day 5 uses two lightweight protections:
+
+- Honeypot field: catches simple bots that fill hidden fields.
+- Basic IP rate limit: limits repeated submissions per minute.
+
+This is enough for an internship SaaS prototype without adding hCaptcha friction before the product is validated.
+
+### Email Notes
+
+Email sending is best-effort. If Resend is not configured, the app still saves the lead and returns a graceful response.

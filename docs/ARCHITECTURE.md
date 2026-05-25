@@ -46,3 +46,19 @@ The audit engine should be financially defensible. Static business rules make ea
 ```
 
 The public route intentionally does not render email, company, role, or private lead metadata.
+
+## Day 5 Lead Flow
+
+```txt
+/results or /results/[id]
+  User sees savings first
+  User submits lead form
+    -> POST /api/leads
+      -> honeypot check
+      -> basic rate limit
+      -> zod validation
+      -> save lead to Supabase
+      -> send best-effort Resend confirmation email
+```
+
+Lead capture intentionally happens after value is shown. This keeps the funnel aligned with the assignment requirement and feels more trustworthy than gating the report.
