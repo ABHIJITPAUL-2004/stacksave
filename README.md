@@ -153,4 +153,35 @@ git commit -m "Polish audit results dashboard"
 git commit -m "Add AI summary API with fallback handling"
 git commit -m "Add conditional results CTA and share UX"
 ```
+
+## Day 5 Part 1 Scope
+
+- Supabase server client
+- `audits` and `leads` schema draft
+- `POST /api/audits`
+- `GET /api/audits/[id]`
+- `/results/[id]` public-safe reports
+- Dynamic metadata for shared audit pages
+- Save report panel on local results
+
+## Supabase Setup
+
+1. Create a Supabase project.
+2. Run `docs/SUPABASE_SCHEMA.sql` in the Supabase SQL editor.
+3. Add these values to `.env.local`:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+```
+
+`SUPABASE_SERVICE_ROLE_KEY` must stay server-only.
+
+## Suggested Day 5 Part 1 Commit
+
+```bash
+git add .
+git commit -m "Add Supabase audit persistence and public reports"
+```
 ##ai summary added

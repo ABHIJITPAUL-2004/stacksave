@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ShareButton } from "@/components/results/ShareButton";
 import { formatCurrency } from "@/utils/format";
 
-export function SavingsHero({ auditResult }) {
+export function SavingsHero({ auditResult, publicUrl, isPublicReport = false }) {
   const savingsPercent =
     auditResult.totalMonthlySpend > 0
       ? Math.round(
@@ -53,8 +53,13 @@ export function SavingsHero({ auditResult }) {
               >
                 Edit inputs
               </Link>
-              <ShareButton />
+              <ShareButton url={publicUrl} />
             </div>
+            {!isPublicReport ? (
+              <p className="text-xs text-slate-500">
+                Save this report below to create a permanent share URL.
+              </p>
+            ) : null}
           </div>
         </div>
       </div>

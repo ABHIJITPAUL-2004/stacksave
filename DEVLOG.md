@@ -88,3 +88,28 @@ The engine intentionally uses deterministic rules instead of AI. This keeps the 
 ### Notes
 
 AI is only used for narrative summarization. Calculations, recommendations, savings, and business logic remain deterministic inside the audit engine.
+
+## Day 5 - Backend Flow and Shareable Audits, Part 1
+
+### Completed
+
+- Installed `@supabase/supabase-js`.
+- Added server-side Supabase client setup.
+- Added database helpers for creating and fetching audits.
+- Added SQL schema for `audits` and `leads`.
+- Added `POST /api/audits` to save audit inputs and deterministic results.
+- Added `GET /api/audits/[id]` to fetch public-safe audit reports.
+- Added `/results/[id]` for shareable public report pages.
+- Added dynamic Open Graph and Twitter metadata for shared audit URLs.
+- Added a save-report panel to create a persistent public URL.
+
+### Security Notes
+
+- Supabase writes use the server-only service role key.
+- Public result pages only expose aggregate report data, recommendations, and summary text.
+- Email, company, and lead details are not included in public reports.
+- API input is validated with `zod` before database writes.
+
+### Paused Before Part 2
+
+The next commit should add lead capture, transactional email, lightweight abuse protection, and final error/loading polish.

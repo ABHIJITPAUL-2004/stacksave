@@ -27,3 +27,22 @@ lib/auditEngine/
 ## Why Deterministic Rules
 
 The audit engine should be financially defensible. Static business rules make each recommendation traceable, testable, and easy to adjust as pricing assumptions change.
+
+## Day 5 Persistence Flow
+
+```txt
+/results
+  Save report
+    -> POST /api/audits
+      -> validate input with zod
+      -> run deterministic audit engine
+      -> save public-safe result to Supabase
+      -> return /results/[publicId]
+
+/results/[id]
+  -> fetch audit by public_id
+  -> render aggregate report only
+  -> generate dynamic Open Graph metadata
+```
+
+The public route intentionally does not render email, company, role, or private lead metadata.
