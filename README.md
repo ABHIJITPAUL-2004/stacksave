@@ -153,3 +153,4 @@ git commit -m "Polish audit results dashboard"
 git commit -m "Add AI summary API with fallback handling"
 git commit -m "Add conditional results CTA and share UX"
 ```
+##ai summary added
