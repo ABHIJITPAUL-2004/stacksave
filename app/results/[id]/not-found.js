@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 
 export default function SharedResultsNotFound() {
   return (
-    <main className="min-h-screen bg-[#05060a] text-white">
+    <main id="main-content" className="min-h-screen bg-[#05060a] text-white">
       <Navbar />
       <section className="px-5 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl rounded-xl border border-white/10 bg-white/[0.04] p-8 text-center">

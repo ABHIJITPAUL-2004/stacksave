@@ -6,7 +6,7 @@ import { useState } from "react";
 export function LeadCaptureForm({
   auditInput,
   auditResult,
-  publicId,
+  auditId: initialAuditId,
   mode = "soft",
 }) {
   const [formState, setFormState] = useState({
@@ -31,7 +31,7 @@ export function LeadCaptureForm({
     setSubmitState({ isSubmitting: true, message: "", error: "" });
 
     try {
-      let auditId = publicId || "";
+      let auditId = initialAuditId || "";
 
       if (!auditId && auditInput) {
         setSubmitState({
@@ -64,7 +64,6 @@ export function LeadCaptureForm({
         body: JSON.stringify({
           ...formState,
           auditId,
-          auditPublicId: auditId,
           auditResult,
         }),
       });

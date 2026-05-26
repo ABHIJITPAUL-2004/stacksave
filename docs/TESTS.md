@@ -1,18 +1,46 @@
-# Suggested Tests
+# Testing Strategy
 
-## Audit Engine
+StackSave uses Vitest for fast unit tests around the deterministic business
+logic. The first production-readiness suite focuses on code that directly
+affects financial output.
 
-- returns zero savings for an already optimized stack
-- recommends ChatGPT Plus when ChatGPT Team has fewer than 3 seats
-- recommends Cursor Pro when Cursor Business is used by a solo developer
-- flags enterprise plans for small teams
-- flags seat count greater than team size
-- detects overlapping general assistant subscriptions
-- detects overlapping coding assistant subscriptions
+## Commands
 
-## Pricing Engine
+```bash
+npm test
+npm run test:watch
+```
 
-- calculates monthly spend as plan price times seats
-- returns the correct best-fit plan for tiny teams
-- handles unknown tools safely
-- handles usage-based plans without crashing
+CI runs the non-watch command.
+
+## Current Coverage
+
+```txt
+tests/
+  audit/
+    auditEngine.test.js
+    recommendationEngine.test.js
+    savingsCalculator.test.js
+```
+
+## What Is Tested
+
+- numeric coercion and safe savings calculations
+- monthly and annual savings math
+- recommendation creation and sorting
+- end-to-end audit result shape
+- empty audit input handling
+
+## Why This Scope
+
+The audit engine is deterministic, so it should be protected before adding
+more UI polish or AI-generated explanations. The tests intentionally avoid
+snapshot-heavy component assertions because the dashboard copy and layout are
+still moving during the internship build.
+
+## Next Tests
+
+- pricing engine best-fit plan selection
+- API route validation failures
+- lead duplicate handling
+- public report not-found behavior

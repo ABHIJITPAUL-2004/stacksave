@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 
-export default function SharedResultsLoading() {
+export default function ResultsLoading() {
   return (
     <main id="main-content" className="min-h-screen bg-[#05060a] text-white">
       <Navbar />
@@ -12,6 +12,7 @@ export default function SharedResultsLoading() {
             <div className="h-32 animate-pulse rounded-xl bg-white/[0.04]" />
             <div className="h-32 animate-pulse rounded-xl bg-white/[0.04]" />
           </div>
+          <div className="h-52 animate-pulse rounded-xl bg-white/[0.04]" />
         </div>
       </section>
     </main>

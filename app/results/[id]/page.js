@@ -61,7 +61,7 @@ export default async function SharedResultsPage({ params }) {
     <PublicResultsPage
       auditResult={audit.auditResult}
       aiSummary={audit.aiSummary}
-      publicId={audit.id}
+      auditId={audit.id}
     />
   );
 }

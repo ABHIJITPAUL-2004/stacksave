@@ -8,7 +8,6 @@
 - Installed `react-hook-form`, `zod`, and `@hookform/resolvers`.
 - Created reusable form components:
   - `ToolCard`
-  - `SpendInput`
   - `PlanSelector`
   - `TeamSizeInput`
   - `UseCaseSelector`
@@ -161,3 +160,35 @@ Email sending is best-effort. If Resend is not configured, the app still saves t
 ### Notes
 
 Supabase is used for durable persistence, while deterministic audit calculations remain inside the application. Recommendations are stored as JSONB because the shape can evolve as rules become more sophisticated.
+
+## Day 6 - Production Polish, Part 2
+
+### Completed
+
+- Installed and configured Vitest.
+- Added unit tests for:
+  - savings calculations
+  - recommendation creation and sorting
+  - end-to-end audit engine output
+- Added GitHub Actions CI in `.github/workflows/ci.yml`.
+- Added route loading states for `/results` and `/results/[id]`.
+- Added app-level and results-level error boundaries.
+- Improved accessibility with:
+  - skip-to-content link
+  - visible keyboard focus styles
+  - labeled primary navigation
+  - decorative icons marked as hidden
+- Removed the unused `SpendInput` component.
+- Updated README, architecture, security, and testing documentation.
+
+### Verification
+
+- `npm run lint`
+- `npm test`
+- `npm run build`
+
+### Notes
+
+Part 2 focused on stability and confidence rather than redesign. The core
+product experience stays the same, but the project is now safer to deploy and
+easier to maintain.

@@ -111,6 +111,8 @@ npm run dev
 npm run build
 npm run start
 npm run lint
+npm test
+npm run test:watch
 ```
 
 ---
@@ -156,16 +158,43 @@ The app writes through Next.js API routes instead of directly from the browser. 
 
 ---
 
-# Testing
+# Testing and CI
 
-Suggested test structure:
+Vitest covers the deterministic audit logic:
 
 ```txt
 tests/
-  audit-engine.test.js
-  pricing-engine.test.js
-  recommendation-rules.test.js
+  audit/
+    auditEngine.test.js
+    recommendationEngine.test.js
+    savingsCalculator.test.js
 ```
+
+GitHub Actions runs:
+
+```bash
+npm ci
+npm run lint
+npm test
+npm run build
+```
+
+The workflow lives in `.github/workflows/ci.yml`.
+
+---
+
+# Production Readiness
+
+Day 6 added:
+
+- route-level loading states
+- app and results error boundaries
+- visible keyboard focus styles
+- skip-to-content link
+- labeled primary navigation
+- public report not-found UI
+- CI pipeline for lint, test, and build verification
+- dead component cleanup
 
 ---
 

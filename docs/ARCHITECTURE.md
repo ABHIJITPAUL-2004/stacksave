@@ -28,6 +28,19 @@ lib/auditEngine/
 
 The audit engine should be financially defensible. Static business rules make each recommendation traceable, testable, and easy to adjust as pricing assumptions change.
 
+## Day 6 Reliability Layer
+
+Production polish is intentionally layered around the existing architecture:
+
+- route loading files keep slow public reports from showing a blank page
+- error boundaries catch unexpected render failures
+- Vitest protects deterministic finance logic
+- GitHub Actions verifies lint, tests, and production builds
+- accessibility updates are global where possible, such as focus states and skip navigation
+
+This keeps the application stable without changing the product surface or
+rewriting the component tree.
+
 ## Day 6 Supabase Persistence Flow
 
 ```txt

@@ -3,7 +3,7 @@ import { Navbar } from "@/components/Navbar";
 
 export default function AuditPage() {
   return (
-    <main className="min-h-screen bg-[#05060a] text-white">
+    <main id="main-content" className="min-h-screen bg-[#05060a] text-white">
       <Navbar />
       <section className="px-5 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
