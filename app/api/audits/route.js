@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { runAudit } from "@/lib/auditEngine";
-import { createAudit } from "@/lib/db/audits";
+import { createAudit, getAuditById } from "@/lib/db/audits";
 import { buildFallbackSummary } from "@/lib/summaries/fallbackSummary";
 
 const auditToolSchema = z.object({
@@ -36,16 +36,14 @@ export async function POST(request) {
     const aiSummary =
       parsed.data.aiSummary || buildFallbackSummary(auditResult);
     const savedAudit = await createAudit({
-      auditInput: parsed.data.auditInput,
       auditResult,
       aiSummary,
     });
 
     return NextResponse.json({
-      publicId: savedAudit.publicId,
-      url: `/results/${savedAudit.publicId}`,
-      auditResult,
-      aiSummary,
+      id: savedAudit.id,
+      url: `/results/${savedAudit.id}`,
+      audit: savedAudit,
     });
   } catch (error) {
     return NextResponse.json(
@@ -54,6 +52,33 @@ export async function POST(request) {
           error.message ||
           "Could not save audit. Please check the server configuration.",
       },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Audit id is required" },
+        { status: 400 }
+      );
+    }
+
+    const audit = await getAuditById(id);
+
+    if (!audit) {
+      return NextResponse.json({ error: "Audit not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ audit });
+  } catch (error) {
+    return NextResponse.json(
+      { error: error.message || "Could not fetch audit" },
       { status: 500 }
     );
   }

@@ -139,3 +139,25 @@ This is enough for an internship SaaS prototype without adding hCaptcha friction
 ### Email Notes
 
 Email sending is best-effort. If Resend is not configured, the app still saves the lead and returns a graceful response.
+
+## Day 6 - Supabase Integration, Part 1
+
+### Completed
+
+- Added a reusable public Supabase client in `lib/supabase.js`.
+- Added `.env.local` template values for local Supabase setup.
+- Updated Supabase schema to use UUID audit IDs, public-safe audit totals, JSONB recommendations, and lead records.
+- Updated audit database helpers:
+  - `createAudit()`
+  - `getAuditById()`
+- Updated lead database helper:
+  - `saveLead()`
+- Updated `POST /api/audits` to validate input, run the audit engine, save public-safe results, and return `/results/[id]`.
+- Added `GET /api/audits?id=` and `GET /api/audits/[id]` for audit fetching.
+- Updated public report pages to fetch audits by UUID.
+- Added loading and not-found states for shared audit URLs.
+- Kept service role access server-only through API routes.
+
+### Notes
+
+Supabase is used for durable persistence, while deterministic audit calculations remain inside the application. Recommendations are stored as JSONB because the shape can evolve as rules become more sophisticated.

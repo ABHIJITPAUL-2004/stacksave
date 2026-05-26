@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 import { PublicResultsPage } from "@/components/results/PublicResultsPage";
-import { getAuditByPublicId } from "@/lib/db/audits";
+import { getAuditById } from "@/lib/db/audits";
 import { formatCurrency } from "@/utils/format";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
 
   try {
-    const audit = await getAuditByPublicId(id);
+    const audit = await getAuditById(id);
 
     if (!audit) {
       return {
@@ -48,7 +48,7 @@ export default async function SharedResultsPage({ params }) {
   let audit;
 
   try {
-    audit = await getAuditByPublicId(id);
+    audit = await getAuditById(id);
   } catch {
     audit = null;
   }
@@ -61,7 +61,7 @@ export default async function SharedResultsPage({ params }) {
     <PublicResultsPage
       auditResult={audit.auditResult}
       aiSummary={audit.aiSummary}
-      publicId={audit.publicId}
+      publicId={audit.id}
     />
   );
 }

@@ -124,7 +124,8 @@ ANTHROPIC_API_KEY=
 ANTHROPIC_MODEL=claude-sonnet-4-20250514
 
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxx
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_xxx
 SUPABASE_SERVICE_ROLE_KEY=
 
 RESEND_API_KEY=
@@ -135,6 +136,23 @@ Important:
 - Never commit `.env.local`
 - Keep service role keys server-only
 - Store all API keys securely
+- Use the newer Supabase publishable key format for `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` is kept as a compatibility alias for older examples
+
+---
+
+# Supabase Setup
+
+Run the SQL in `docs/SUPABASE_SCHEMA.sql` inside the Supabase SQL Editor.
+
+The Day 6 schema uses:
+
+- `audits` for public-safe saved audit reports
+- `leads` for post-report contact capture
+- UUID audit IDs for shareable `/results/[id]` pages
+- `jsonb` recommendations so rule output can evolve without immediate table redesign
+
+The app writes through Next.js API routes instead of directly from the browser. This keeps validation, error handling, and server-only credentials in one backend layer.
 
 ---
 
@@ -159,6 +177,7 @@ tests/
 - Results dashboard
 - Public audit reports
 - Lead capture system
+- Full Supabase persistence for saved reports and leads
 
 ### Planned
 - Authentication

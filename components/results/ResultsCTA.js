@@ -1,7 +1,7 @@
 import { CalendarDays, Mail } from "lucide-react";
 import { LeadCaptureForm } from "@/components/lead-capture/LeadCaptureForm";
 
-export function ResultsCTA({ auditResult, publicId }) {
+export function ResultsCTA({ auditInput, auditResult, publicId }) {
   const isPremiumOpportunity = auditResult.totalMonthlySavings > 500;
 
   if (isPremiumOpportunity) {
@@ -34,6 +34,7 @@ export function ResultsCTA({ auditResult, publicId }) {
             </p>
           </div>
           <LeadCaptureForm
+            auditInput={auditInput}
             auditResult={auditResult}
             publicId={publicId}
             mode="premium"
@@ -70,7 +71,11 @@ export function ResultsCTA({ auditResult, publicId }) {
             follow-up and future optimization updates.
           </p>
         </div>
-        <LeadCaptureForm auditResult={auditResult} publicId={publicId} />
+        <LeadCaptureForm
+          auditInput={auditInput}
+          auditResult={auditResult}
+          publicId={publicId}
+        />
       </div>
     </section>
   );

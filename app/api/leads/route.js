@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getAuditByPublicId } from "@/lib/db/audits";
+import { getAuditById } from "@/lib/db/audits";
 import { saveLead } from "@/lib/db/leads";
 import { sendLeadConfirmationEmail } from "@/lib/email/resend";
 import { checkRateLimit } from "@/lib/security/rateLimit";
@@ -10,6 +10,7 @@ const leadSchema = z.object({
   companyName: z.string().max(120).optional().or(z.literal("")),
   role: z.string().max(80).optional().or(z.literal("")),
   teamSize: z.coerce.number().int().min(1).optional().or(z.literal("")),
+  auditId: z.string().optional().or(z.literal("")),
   auditPublicId: z.string().optional().or(z.literal("")),
   auditResult: z
     .object({
@@ -54,8 +55,9 @@ export async function POST(request) {
     }
 
     let audit = null;
-    if (parsed.data.auditPublicId) {
-      audit = await getAuditByPublicId(parsed.data.auditPublicId);
+    const requestedAuditId = parsed.data.auditId || parsed.data.auditPublicId;
+    if (requestedAuditId) {
+      audit = await getAuditById(requestedAuditId);
     }
 
     const lead = await saveLead({
@@ -65,7 +67,6 @@ export async function POST(request) {
       role: parsed.data.role,
       teamSize:
         parsed.data.teamSize === "" ? undefined : parsed.data.teamSize,
-      source: audit ? "public-results" : "local-results",
     });
 
     const auditResultForEmail = audit?.auditResult || parsed.data.auditResult;

@@ -28,7 +28,7 @@ lib/auditEngine/
 
 The audit engine should be financially defensible. Static business rules make each recommendation traceable, testable, and easy to adjust as pricing assumptions change.
 
-## Day 5 Persistence Flow
+## Day 6 Supabase Persistence Flow
 
 ```txt
 /results
@@ -36,16 +36,29 @@ The audit engine should be financially defensible. Static business rules make ea
     -> POST /api/audits
       -> validate input with zod
       -> run deterministic audit engine
-      -> save public-safe result to Supabase
-      -> return /results/[publicId]
+      -> save public-safe totals, recommendations, and summary to Supabase
+      -> return /results/[auditId]
 
 /results/[id]
-  -> fetch audit by public_id
+  -> validate id as UUID
+  -> fetch audit by id
   -> render aggregate report only
   -> generate dynamic Open Graph metadata
 ```
 
-The public route intentionally does not render email, company, role, or private lead metadata.
+The public route intentionally does not render email, company, role, or private lead metadata. The UUID is the public report identifier for the internship build, which keeps the database simple and avoids maintaining a second public id column.
+
+## Why Supabase
+
+Supabase is a good fit for StackSave because the product needs a small relational backend quickly: persisted reports, lead capture, SQL constraints, JSON support, and a clean path to authentication later. PostgreSQL keeps the finance-related records structured while still allowing flexible recommendation payloads.
+
+## Why JSONB
+
+Recommendations are stored as `jsonb` because each audit can produce different recommendation types with different metadata. Keeping recommendations in JSONB avoids creating several premature rule-specific tables while still allowing PostgreSQL to store and query the data reliably.
+
+## Why API Routes
+
+The browser never writes directly to Supabase. Client components call Next.js API routes, and those routes validate input with `zod`, run deterministic server logic, and then write to Supabase. In production, a server-only service role key is preferred. During the internship setup, the API can also use Supabase's publishable key with narrow RLS insert policies for `audits` and `leads`.
 
 ## Day 5 Lead Flow
 
@@ -57,7 +70,7 @@ The public route intentionally does not render email, company, role, or private 
       -> honeypot check
       -> basic rate limit
       -> zod validation
-      -> save lead to Supabase
+      -> save lead to Supabase with duplicate protection
       -> send best-effort Resend confirmation email
 ```
 

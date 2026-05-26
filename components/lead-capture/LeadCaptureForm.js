@@ -3,7 +3,12 @@
 import { Loader2, Mail } from "lucide-react";
 import { useState } from "react";
 
-export function LeadCaptureForm({ auditResult, publicId, mode = "soft" }) {
+export function LeadCaptureForm({
+  auditInput,
+  auditResult,
+  publicId,
+  mode = "soft",
+}) {
   const [formState, setFormState] = useState({
     email: "",
     companyName: "",
@@ -26,6 +31,31 @@ export function LeadCaptureForm({ auditResult, publicId, mode = "soft" }) {
     setSubmitState({ isSubmitting: true, message: "", error: "" });
 
     try {
+      let auditId = publicId || "";
+
+      if (!auditId && auditInput) {
+        setSubmitState({
+          isSubmitting: true,
+          message: "Saving audit report before linking your details...",
+          error: "",
+        });
+
+        const auditResponse = await fetch("/api/audits", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({ auditInput }),
+        });
+        const auditData = await auditResponse.json();
+
+        if (!auditResponse.ok) {
+          throw new Error(auditData.error || "Could not save audit report");
+        }
+
+        auditId = auditData.id || auditData.audit?.id || "";
+      }
+
       const response = await fetch("/api/leads", {
         method: "POST",
         headers: {
@@ -33,7 +63,8 @@ export function LeadCaptureForm({ auditResult, publicId, mode = "soft" }) {
         },
         body: JSON.stringify({
           ...formState,
-          auditPublicId: publicId || "",
+          auditId,
+          auditPublicId: auditId,
           auditResult,
         }),
       });

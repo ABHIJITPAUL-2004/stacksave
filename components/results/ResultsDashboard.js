@@ -96,7 +96,11 @@ export function ResultsDashboard({
         ))}
       </section>
 
-      <ResultsCTA auditResult={auditResult} publicId={publicId} />
+      <ResultsCTA
+        auditInput={auditInput}
+        auditResult={auditResult}
+        publicId={publicId}
+      />
     </div>
   );
 }
