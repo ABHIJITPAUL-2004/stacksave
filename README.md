@@ -1,98 +1,101 @@
 # StackSave
 
-StackSave is a SaaS project designed to help startups and small teams understand where they may be overspending on AI tools.
+StackSave is an AI spend audit SaaS MVP for startups. It helps teams understand
+where they may be overspending on AI tools such as ChatGPT, Claude, Cursor,
+GitHub Copilot, Gemini, OpenAI API, and Anthropic API.
 
-The platform analyzes usage across tools like ChatGPT, Claude, Cursor, GitHub Copilot, and Gemini, then generates practical cost-saving recommendations through a clean audit dashboard experience.
+The app collects a team’s AI stack, runs deterministic savings logic, and
+generates a shareable report with monthly savings, annual impact, and practical
+recommendations.
 
-This project was built as part of a SaaS internship project with a focus on scalable frontend architecture, reusable UI systems, and deterministic audit logic before adding full backend intelligence.
+## Problem
 
----
+Fast-moving teams often buy AI tools seat by seat. Over time, that creates
+unused seats, overlapping subscriptions, oversized enterprise plans, and
+unclear ownership. StackSave turns that messy spend into a focused audit report.
 
 ## Features
 
-### Landing Experience
-- Modern dark SaaS landing page
-- Fully responsive UI
-- Reusable component architecture
-- Clean and scalable folder structure
+- Modern SaaS landing page
+- Dynamic AI tool spend form
+- Zod + React Hook Form validation
+- localStorage form persistence
+- Deterministic audit and recommendation engine
+- Savings calculations for monthly and annual impact
+- AI-generated summary with deterministic fallback
+- Public shareable audit reports
+- Supabase persistence for audits and leads
+- Lead capture with duplicate handling
+- Resend transactional email support
+- Loading states, error boundaries, and not-found states
+- Vitest unit tests and GitHub Actions CI
 
-### AI Spend Audit
-- Dynamic AI tool input cards
-- Add/remove tool support
-- Monthly spend and seat tracking
-- Team size and use-case collection
-- Form validation using Zod + React Hook Form
-- Local persistence with localStorage
+## Screenshots
 
-### Audit Intelligence
-- Deterministic recommendation engine
-- Pricing assumption system
-- Savings calculations
-- Plan downgrade suggestions
-- Seat cleanup detection
-- Vendor consolidation recommendations
+Screenshots from the final local QA pass:
 
-### Results Dashboard
-- Savings overview section
-- Spend comparison summaries
-- Founder-style AI summaries
-- Fallback summaries when AI fails
-- Shareable public report pages
+![Landing page](/screenshots/landing.png)
 
-### Backend & Infrastructure
-- Supabase audit persistence
-- Public-safe audit report routes
-- Lead capture flow
-- Transactional email support using Resend
-- Basic rate limiting and duplicate lead handling
+![Audit form](/screenshots/audit-form.png)
 
----
+![Results dashboard](/screenshots/results-dashboard.png)
 
-# Tech Stack
+![Public report](/screenshots/public-report.png)
 
-- Next.js
+![Mobile results](/screenshots/mobile-results.png)
+
+## Tech Stack
+
+- Next.js App Router
 - React
 - JavaScript
 - Tailwind CSS
-- lucide-react
-- react-hook-form
-- zod
-- @hookform/resolvers
 - Supabase
 - Resend
 - Anthropic Messages API
+- Vitest
+- GitHub Actions
+- Vercel
 
----
-
-# Project Structure
+## Architecture
 
 ```txt
 app/
+  api/
+  audit/
+  results/
 components/
-components/audit/
-components/ui/
+  audit/
+  lead-capture/
+  results/
+  ui/
 data/
 docs/
+hooks/
 lib/
-lib/auditEngine/
-public/
+  ai/
+  auditEngine/
+  db/
+  email/
+  security/
+  supabase/
 tests/
+  audit/
 utils/
 ```
 
----
+The audit engine is intentionally deterministic. AI is used for presentation
+summaries, while savings, recommendations, and financial calculations stay
+traceable in JavaScript rules.
 
-# Getting Started
+Supabase stores public-safe audit reports and lead records. Recommendations are
+stored as JSONB because rule output can evolve without forcing premature table
+splits.
 
-Install dependencies:
+## Getting Started
 
 ```bash
 npm install
-```
-
-Start the development server:
-
-```bash
 npm run dev
 ```
 
@@ -102,63 +105,54 @@ Open:
 http://localhost:3000
 ```
 
----
+## Environment Variables
 
-# Available Scripts
-
-```bash
-npm run dev
-npm run build
-npm run start
-npm run lint
-npm test
-npm run test:watch
-```
-
----
-
-# Environment Variables
-
-Create a `.env.local` file in the root directory and add:
+Create `.env.local`:
 
 ```env
 ANTHROPIC_API_KEY=
 ANTHROPIC_MODEL=claude-sonnet-4-20250514
 
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxx
-NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_xxx
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 
 RESEND_API_KEY=
 RESEND_FROM_EMAIL=StackSave <onboarding@resend.dev>
 ```
 
-Important:
-- Never commit `.env.local`
-- Keep service role keys server-only
-- Store all API keys securely
-- Use the newer Supabase publishable key format for `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` is kept as a compatibility alias for older examples
+Notes:
 
----
+- `.env.local` is gitignored.
+- Use Supabase’s newer `sb_publishable_...` key format.
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` is kept as a compatibility alias.
+- Keep service role, Resend, and AI API keys server-side only.
 
-# Supabase Setup
+## Supabase Setup
 
 Run the SQL in `docs/SUPABASE_SCHEMA.sql` inside the Supabase SQL Editor.
 
-The Day 6 schema uses:
+The schema creates:
 
-- `audits` for public-safe saved audit reports
-- `leads` for post-report contact capture
-- UUID audit IDs for shareable `/results/[id]` pages
-- `jsonb` recommendations so rule output can evolve without immediate table redesign
+- `audits`
+- `leads`
+- UUID primary keys
+- JSONB recommendations
+- foreign key relationship from leads to audits
+- RLS policies for the current app flow
 
-The app writes through Next.js API routes instead of directly from the browser. This keeps validation, error handling, and server-only credentials in one backend layer.
+## Scripts
 
----
+```bash
+npm run dev
+npm run lint
+npm test
+npm run build
+npm run start
+```
 
-# Testing and CI
+## Testing
 
 Vitest covers the deterministic audit logic:
 
@@ -170,7 +164,15 @@ tests/
     savingsCalculator.test.js
 ```
 
-GitHub Actions runs:
+Run:
+
+```bash
+npm test
+```
+
+## CI/CD
+
+GitHub Actions runs on pushes and pull requests to `main`:
 
 ```bash
 npm ci
@@ -179,50 +181,48 @@ npm test
 npm run build
 ```
 
-The workflow lives in `.github/workflows/ci.yml`.
+Workflow file:
 
----
+```txt
+.github/workflows/ci.yml
+```
 
-# Production Readiness
+## Deployment
 
-Day 6 added:
+Deploy with Vercel as a standard Next.js project. Add the environment variables
+listed above in Vercel project settings, then run a production smoke test:
 
-- route-level loading states
-- app and results error boundaries
-- visible keyboard focus styles
-- skip-to-content link
-- labeled primary navigation
-- public report not-found UI
-- CI pipeline for lint, test, and build verification
-- dead component cleanup
+1. Complete an audit.
+2. Save the report.
+3. Open the generated public URL.
+4. Submit the lead form.
+5. Confirm Supabase rows exist in `audits` and `leads`.
 
----
+More details: `docs/DEPLOYMENT.md`.
 
-# Roadmap
+Current status: local production build passes. Vercel CLI is available, but
+deployment requires logging in to the owner’s Vercel account.
 
-### Current
-- AI spend audit workflow
-- Deterministic savings engine
-- Results dashboard
-- Public audit reports
-- Lead capture system
-- Full Supabase persistence for saved reports and leads
+## Security Notes
 
-### Planned
-- Authentication
-- Team collaboration
-- Real AI recommendation logic
-- Stripe billing integration
-- Historical analytics
-- Exportable reports
+- `.env.local` is ignored.
+- Public reports expose aggregate audit data only.
+- Lead details are not shown on public report pages.
+- API input is validated before writes.
+- Supabase RLS is enabled.
+- Resend failures do not block lead capture.
+
+## Future Improvements
+
+- Authentication and team workspaces
+- Historical spend tracking
+- CSV import/export
+- PDF report export
 - Admin dashboard
+- Stripe billing
+- Better usage-based API spend modeling
 
----
+## Project Status
 
-# Notes
-
-The current version intentionally uses deterministic audit rules instead of fully AI-generated recommendations to keep the system predictable and transparent during development.
-
-AI summaries are layered on top primarily for presentation and user experience.
-
-The platform architecture is designed to support future scaling into a production SaaS product.
+StackSave is ready for final internship review and portfolio presentation as an
+early-stage SaaS MVP.

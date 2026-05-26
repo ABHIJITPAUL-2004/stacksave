@@ -192,3 +192,39 @@ Supabase is used for durable persistence, while deterministic audit calculations
 Part 2 focused on stability and confidence rather than redesign. The core
 product experience stays the same, but the project is now safer to deploy and
 easier to maintain.
+
+## Day 7 - Final Submission Prep
+
+### Completed
+
+- Removed the accidental nested duplicate project scaffold.
+- Removed unused default public SVG assets.
+- Added final reviewer-focused README content.
+- Added project screenshots under `public/screenshots`.
+- Added final documentation:
+  - `docs/DEMO_DATA.md`
+  - `docs/DEPLOYMENT.md`
+  - `docs/PORTFOLIO.md`
+- Performed local app QA across:
+  - landing page
+  - audit form
+  - audit calculations
+  - results dashboard
+  - public audit URL
+  - invalid report URL
+  - Supabase audit persistence
+  - lead API persistence
+- Fixed public report tool-count display when reports are loaded from compact Supabase records.
+- Confirmed Vercel CLI is available, but deployment requires account login.
+
+### Verification
+
+- `npm run lint`
+- `npm test`
+- `npm run build`
+
+### Notes
+
+Day 7 focused on presentation and credibility. The app now reads as a cohesive
+early-stage SaaS MVP with a clear problem, traceable logic, working persistence,
+tests, CI, and portfolio material.

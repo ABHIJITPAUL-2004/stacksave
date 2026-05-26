@@ -4,6 +4,13 @@ export function OptimizationInsights({ auditResult }) {
   const topRecommendation = auditResult.recommendations.find(
     (recommendation) => recommendation.monthlySavings > 0
   );
+  const toolCount =
+    auditResult.tools?.length ||
+    new Set(
+      auditResult.recommendations
+        .map((recommendation) => recommendation.tool)
+        .filter((tool) => tool && tool !== "Stack")
+    ).size;
 
   const insights = [
     {
@@ -12,7 +19,7 @@ export function OptimizationInsights({ auditResult }) {
     },
     {
       label: "Tools analyzed",
-      value: `${auditResult.tools.length} tools across the AI stack`,
+      value: `${toolCount} tools across the AI stack`,
     },
     {
       label: "Annualized impact",
