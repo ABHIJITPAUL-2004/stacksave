@@ -1,18 +1,12 @@
 # StackSave
 
-StackSave is an AI spend audit SaaS MVP for startups. It helps teams understand
-where they may be overspending on AI tools such as ChatGPT, Claude, Cursor,
-GitHub Copilot, Gemini, OpenAI API, and Anthropic API.
+StackSave is an AI spend audit SaaS MVP for startups. It helps teams understand where they may be overspending on AI tools such as ChatGPT, Claude, Cursor, GitHub Copilot, Gemini, OpenAI API, and Anthropic API.
 
-The app collects a team’s AI stack, runs deterministic savings logic, and
-generates a shareable report with monthly savings, annual impact, and practical
-recommendations.
+The app collects a team’s AI stack, runs deterministic savings logic, and generates a shareable report with monthly savings, annual impact, and practical recommendations.
 
 ## Problem
 
-Fast-moving teams often buy AI tools seat by seat. Over time, that creates
-unused seats, overlapping subscriptions, oversized enterprise plans, and
-unclear ownership. StackSave turns that messy spend into a focused audit report.
+Fast-moving teams often buy AI tools seat by seat. Over time, that creates unused seats, overlapping subscriptions, oversized enterprise plans, and unclear ownership. StackSave turns that messy spend into a focused audit report.
 
 ## Features
 
@@ -224,5 +218,4 @@ deployment requires logging in to the owner’s Vercel account.
 
 ## Project Status
 
-StackSave is ready for final internship review and portfolio presentation as an
-early-stage SaaS MVP.
+StackSave is ready for final internship review and portfolio presentation as an early-stage SaaS MVP.
