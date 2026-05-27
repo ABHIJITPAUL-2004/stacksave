@@ -2,50 +2,65 @@
 
 ## Purpose
 
-This document captures the early assumptions StackSave is built around and the
-types of feedback the product should validate.
+This document captures early feedback conversations used to validate the core assumptions behind StackSave and understand whether teams actually care about SaaS and AI subscription optimization.
 
-## Target Interviewees
+---
 
-- startup founders
-- finance operators
-- agency owners
-- engineering leads managing AI tooling decisions
+# Interview 1 — Engineering Student Running Small Projects
 
-## Interview Goals
+## Profile
 
-- understand how teams buy AI tools today
-- identify where subscription waste tends to happen
-- learn what proof is needed before a team acts on a savings report
-- discover which report format is easiest to share internally
+* CS student
+* uses multiple AI tools for coding and coursework
+* pays for some subscriptions personally
 
-## Sample Questions
+## Main Takeaways
 
-- Which AI tools does your team pay for today?
-- How do you decide who gets access to each tool?
-- Have you found unused seats or overlapping subscriptions?
-- What would make an audit report credible enough to act on?
-- Would a monthly savings estimate or annual savings estimate matter more?
-- What follow-up action would you take after seeing the report?
+* Often forgets which subscriptions are still active
+* Has overlapping tools serving similar purposes
+* Likes the idea of a quick “stack audit” instead of manually reviewing expenses
+* Found annual savings estimates more impactful than monthly numbers
 
-## Likely Patterns to Watch For
+## Interesting Insight
 
-- multiple tools serving the same use case
-- untracked seat assignments
-- premium plans purchased too early
-- API spend that is not reviewed regularly
-- uncertainty about who owns renewals
+The user said they would share a report if it clearly showed “money being wasted” in a visual way that teammates could immediately understand.
 
-## Feedback to Capture
+---
 
-- biggest pain point
-- current process for reviewing AI spend
-- trust level in automated recommendations
-- willingness to share the report internally
-- interest in a future team dashboard
+# Interview 2 — Business Owner (Bhanu Garments)
 
-## Interview Output
+## Profile
 
-Each interview should end with one clear takeaway: whether the user sees the
-audit as a useful diagnostic, a nice-to-have report, or a tool they would pay
-to use repeatedly.
+* local garment business owner
+* manages operational expenses and vendor payments
+* limited technical background but actively tracks business costs
+
+## Main Takeaways
+
+* Interested in reducing unnecessary recurring expenses
+* Mentioned that small monthly software payments are often ignored until they become significant annually
+* Preferred simple cost breakdowns instead of overly technical dashboards
+* Found the idea of identifying overlapping subscriptions useful for small businesses
+
+## Interesting Insight
+
+The user said they would share a savings report with partners or accountants if it clearly explained where money was being wasted and how much could realistically be saved per year.
+
+# Interview 3 — Senior Developer Building a Comet-like Product
+
+## Profile
+
+* senior developer working on an AI/application-service product
+* manages multiple development and API tools
+* familiar with scaling SaaS infrastructure and tooling costs
+
+## Main Takeaways
+
+* API usage costs become difficult to track as teams grow
+* Teams often keep paying for tools that are only temporarily needed during development
+* Wanted recommendations that felt actionable instead of generic cost-cutting advice
+* Suggested grouping tools by function to better identify overlap
+
+## Interesting Insight
+
+The user mentioned that engineering teams usually focus on shipping features first and review infrastructure or AI-tool spending much later, which creates unnoticed recurring costs over time.

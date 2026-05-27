@@ -1,38 +1,31 @@
+```md
 # Reflection Notes
 
 ## Project Outcome
 
-StackSave demonstrates a complete internship-ready SaaS MVP: a landing page,
-an audit intake flow, deterministic savings logic, a shareable results page,
-and persistence for audits and leads.
+StackSave ended up becoming much more complete than what I originally planned for the internship. The final version includes a landing page, audit flow, results page, Supabase database integration, and deployment on Vercel. My original goal was honestly just to learn how people build actual SaaS-style products outside of college assignments.
 
 ## What Worked Well
 
-- Keeping savings and recommendation logic deterministic made the product
-  easier to test and explain.
-- Splitting the UI into landing, audit, and results surfaces kept the product
-  readable and maintainable.
-- Using Supabase for persistence kept the backend lightweight while still
-  supporting relational data and RLS.
+One thing that worked better than expected was keeping the recommendation logic simple instead of forcing AI into every part of the app. That made the results easier to debug and explain.
+
+Breaking the frontend into separate sections like the landing page, audit flow, and results page also helped a lot because the project became easier to manage as it grew.
+
+Using Supabase was probably the biggest learning experience overall. Before this project I had mostly worked with local SQL databases, so learning environment variables, row-level security, deployment configs, and real production persistence took a lot of trial and error.
 
 ## Tradeoffs
 
-- The product favors traceable finance logic over AI-generated automation.
-- The current release is optimized for a polished MVP rather than deep account
-  management or multi-workspace features.
-- Some future capabilities, such as usage-based spend modeling, will need more
-  product data before they can be made reliable.
+Some parts of the audit logic still rely on generalized assumptions instead of real billing integrations. I focused more on getting the core MVP stable and deployed rather than building advanced dashboards or account systems.
+
+I also spent more time solving backend and deployment issues than polishing the UI.
 
 ## Lessons Learned
 
-- Clear financial assumptions matter more than flashy outputs.
-- Public reports should reveal only aggregate values and avoid exposing private
-  lead details.
-- A small, well-tested rules engine is a stronger foundation than early
-  over-automation.
+This project taught me that deployment and configuration problems can easily take more time than writing frontend code itself. I also learned that building something production-like involves much more than coding pages — things like environment management, database security, API integrations, and debugging matter a lot.
+
+Working with Supabase and Resend also made me more careful about handling secrets and separating public environment variables from server-only keys.
 
 ## Next Iteration
 
-The next version should focus on stronger data capture, richer pricing
-coverage, and tighter conversion analytics so the audit can evolve from an MVP
-demo into a repeatable sales tool.
+If I continue working on StackSave, I’d want to improve the recommendation engine so the audit becomes more context-aware for different kinds of teams instead of using broad SaaS assumptions. I’d also like to add more realistic pricing logic and better reporting features.
+```
