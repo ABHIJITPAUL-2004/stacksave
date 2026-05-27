@@ -220,4 +220,6 @@ deployment requires logging in to the owner’s Vercel account.
 
 StackSave is ready for final internship review and portfolio presentation as an early-stage SaaS MVP.
 
-#comment mede to test workflow
+#comment made to test workflow
+#resolving issue
+#resolved
